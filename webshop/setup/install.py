@@ -211,7 +211,7 @@ def navbar_add_products_link():
 
 
 def say_thanks():
-	click.secho("Thank you for installing Frappe Webshop!", color="green")
+	click.secho("Thank you for installing Webshop!", color="green")
 
 
 patches = [

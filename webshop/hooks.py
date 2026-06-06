@@ -2,9 +2,9 @@ from . import __version__ as _version
 
 app_name = "webshop"
 app_title = "Webshop"
-app_publisher = "Frappe Technologies Pvt. Ltd."
+app_publisher = "Biz Technology Solutions"
 app_description = "Open Source eCommerce Platform"
-app_email = "contact@frappe.io"
+app_email = "dev@ethiobiz.et"
 app_license = "GNU General Public License (v3)"
 app_version = _version
 
