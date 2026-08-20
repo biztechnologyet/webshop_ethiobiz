@@ -8,11 +8,14 @@
  "field_order": [
   "author_name",
   "author_handle",
-  "is_verified",
-  "column_break_author",
-  "post_date",
+  "author_image",
+  "company",
   "category_tag",
-  "pinned",
+  "column_break_meta",
+  "post_date",
+  "is_verified",
+  "likes_count",
+  "comments_count",
   "section_break_content",
   "content",
   "post_image",
@@ -21,12 +24,7 @@
   "is_poll",
   "poll_question",
   "poll_options_json",
-  "poll_votes_json",
-  "section_break_metrics",
-  "likes_count",
-  "comments_count",
-  "column_break_metrics",
-  "shares_count"
+  "poll_votes_json"
  ],
  "fields": [
   {
@@ -34,7 +32,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Author / Business Name",
+   "label": "Author Name",
    "reqd": 1
   },
   {
@@ -42,26 +40,19 @@
    "fieldname": "author_handle",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Handle (@username)",
-   "reqd": 1
+   "label": "Author Handle"
   },
   {
-   "default": "1",
-   "fieldname": "is_verified",
-   "fieldtype": "Check",
+   "fieldname": "author_image",
+   "fieldtype": "Attach Image",
+   "label": "Author Profile Image"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Verified Badge"
-  },
-  {
-   "fieldname": "column_break_author",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "post_date",
-   "fieldtype": "Datetime",
-   "in_list_view": 1,
-   "label": "Post Date & Time",
-   "reqd": 1
+   "label": "Company",
+   "options": "Company"
   },
   {
    "default": "Business & Trade",
@@ -69,17 +60,39 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Topic / Category",
+   "label": "Category Tag",
    "options": "Business & Trade\nTech & Innovation\nFood & Dining\nReal Estate & Living\nJobs & Career\nCommunity & Events"
   },
   {
-   "default": "0",
-   "fieldname": "pinned",
-   "fieldtype": "Check",
-   "label": "Pin to Top"
+   "fieldname": "column_break_meta",
+   "fieldtype": "Column Break"
   },
   {
-   "bold": 1,
+   "default": "Now",
+   "fieldname": "post_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Post Date"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_verified",
+   "fieldtype": "Check",
+   "label": "Verified Business"
+  },
+  {
+   "default": "0",
+   "fieldname": "likes_count",
+   "fieldtype": "Int",
+   "label": "Likes"
+  },
+  {
+   "default": "0",
+   "fieldname": "comments_count",
+   "fieldtype": "Int",
+   "label": "Comments Count"
+  },
+  {
    "fieldname": "section_break_content",
    "fieldtype": "Section Break",
    "label": "Post Content"
@@ -87,29 +100,30 @@
   {
    "fieldname": "content",
    "fieldtype": "Text",
-   "label": "Text / Story",
+   "in_list_view": 1,
+   "label": "Story Content",
    "reqd": 1
   },
   {
    "fieldname": "post_image",
    "fieldtype": "Attach Image",
-   "label": "Post Image"
+   "label": "Attached Image"
   },
   {
    "fieldname": "video_url",
    "fieldtype": "Data",
-   "label": "Video URL (YouTube / MP4)"
+   "label": "Video Embed URL"
   },
   {
    "fieldname": "section_break_poll",
    "fieldtype": "Section Break",
-   "label": "Community Poll / Voting"
+   "label": "Interactive Community Poll"
   },
   {
    "default": "0",
    "fieldname": "is_poll",
    "fieldtype": "Check",
-   "label": "Is Interactive Poll"
+   "label": "Is Poll"
   },
   {
    "fieldname": "poll_question",
@@ -127,35 +141,6 @@
    "fieldtype": "Code",
    "label": "Poll Votes JSON",
    "options": "JSON"
-  },
-  {
-   "fieldname": "section_break_metrics",
-   "fieldtype": "Section Break",
-   "label": "Social Engagement"
-  },
-  {
-   "default": "0",
-   "fieldname": "likes_count",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Likes"
-  },
-  {
-   "default": "0",
-   "fieldname": "comments_count",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Comments"
-  },
-  {
-   "fieldname": "column_break_metrics",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "shares_count",
-   "fieldtype": "Int",
-   "label": "Shares"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -180,38 +165,26 @@
   },
   {
    "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
    "read": 1,
-   "report": 1,
    "role": "Guest",
    "write": 1
   },
   {
    "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
    "read": 1,
-   "report": 1,
    "role": "All",
    "write": 1
   },
   {
    "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
    "read": 1,
-   "report": 1,
    "role": "Website User",
    "write": 1
   }
  ],
  "quick_entry": 1,
- "search_fields": "author_name,author_handle,content,category_tag",
- "sort_field": "modified",
+ "search_fields": "author_name,author_handle,category_tag,content",
+ "sort_field": "creation",
  "sort_order": "DESC",
  "title_field": "author_name",
  "track_changes": 1
