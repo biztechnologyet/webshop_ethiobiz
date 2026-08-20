@@ -17,6 +17,11 @@
   "content",
   "post_image",
   "video_url",
+  "section_break_poll",
+  "is_poll",
+  "poll_question",
+  "poll_options_json",
+  "poll_votes_json",
   "section_break_metrics",
   "likes_count",
   "comments_count",
@@ -96,6 +101,34 @@
    "label": "Video URL (YouTube / MP4)"
   },
   {
+   "fieldname": "section_break_poll",
+   "fieldtype": "Section Break",
+   "label": "Community Poll / Voting"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_poll",
+   "fieldtype": "Check",
+   "label": "Is Interactive Poll"
+  },
+  {
+   "fieldname": "poll_question",
+   "fieldtype": "Data",
+   "label": "Poll Question"
+  },
+  {
+   "fieldname": "poll_options_json",
+   "fieldtype": "Code",
+   "label": "Poll Options JSON",
+   "options": "JSON"
+  },
+  {
+   "fieldname": "poll_votes_json",
+   "fieldtype": "Code",
+   "label": "Poll Votes JSON",
+   "options": "JSON"
+  },
+  {
    "fieldname": "section_break_metrics",
    "fieldtype": "Section Break",
    "label": "Social Engagement"
@@ -127,7 +160,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-20 00:00:00.000000",
+ "modified": "2026-08-21 00:00:00.000000",
  "modified_by": "Administrator",
  "module": "Webshop",
  "name": "Afocha Post",

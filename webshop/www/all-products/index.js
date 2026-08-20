@@ -41,21 +41,20 @@ $(() => {
                     $(".toggle-container").remove();
                     $toolbar.append(`
                         <div class="toggle-container d-flex justify-content-end align-items-center ms-auto" style="margin-left: auto;">
-                            <div class="btn-group shadow-sm" role="group" aria-label="View Toggler" style="background: #f8fafc; padding: 3px; border-radius: 25px; border: 1px solid #e2e8f0;">
-                                <button type="button" id="btn-icon-grid" class="btn btn-sm btn-view-icon ${initial_view === 'Grid View' ? 'active-view' : ''}" title="Grid View" style="border-radius: 20px; width: 38px; height: 34px; border: none; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                            <div class="btn-group shadow-sm" role="group" aria-label="View Toggler" style="background: #f8fafc; padding: 4px; border-radius: 25px; border: 1px solid #cbd5e1;">
+                                <button type="button" id="btn-icon-grid" class="btn btn-sm btn-view-icon ${initial_view === 'Grid View' ? 'active-view' : ''}" title="Grid View" style="border-radius: 20px; width: 40px; height: 36px; border: none; font-size: 17px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
                                     <span>⊞</span>
                                 </button>
-                                <button type="button" id="btn-icon-list" class="btn btn-sm btn-view-icon ${initial_view === 'List View' ? 'active-view' : ''}" title="List View" style="border-radius: 20px; width: 38px; height: 34px; border: none; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                                <button type="button" id="btn-icon-list" class="btn btn-sm btn-view-icon ${initial_view === 'List View' ? 'active-view' : ''}" title="List View" style="border-radius: 20px; width: 40px; height: 36px; border: none; font-size: 17px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
                                     <span>☰</span>
                                 </button>
-                                <button type="button" id="btn-icon-map" class="btn btn-sm btn-view-icon ${initial_view === 'Map View' ? 'active-view' : ''}" title="Map View" style="border-radius: 20px; width: 38px; height: 34px; border: none; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                                <button type="button" id="btn-icon-map" class="btn btn-sm btn-view-icon ${initial_view === 'Map View' ? 'active-view' : ''}" title="Map View" style="border-radius: 20px; width: 40px; height: 36px; border: none; font-size: 17px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
                                     <span>🗺️</span>
                                 </button>
                             </div>
                         </div>
                     `);
 
-                    // Inject custom view styling
                     if (!document.getElementById('ethiobiz-view-style')) {
                         const style = document.createElement('style');
                         style.id = 'ethiobiz-view-style';
@@ -66,15 +65,22 @@ $(() => {
                             }
                             .btn-view-icon:hover {
                                 color: #008080;
-                                background: #f1f5f9;
+                                background: #e2e8f0;
                             }
                             .btn-view-icon.active-view {
                                 background: #008080 !important;
                                 color: #ffffff !important;
-                                box-shadow: 0 2px 8px rgba(0,128,128,0.3);
+                                box-shadow: 0 2px 10px rgba(0,128,128,0.35);
                             }
-                            #products-map-area {
-                                transition: all 0.3s ease;
+                            #all-products-leaflet-map {
+                                width: 100% !important;
+                                height: 80vh !important;
+                                min-height: 560px !important;
+                                border-radius: 20px;
+                            }
+                            .leaflet-container {
+                                width: 100% !important;
+                                height: 100% !important;
                             }
                         `;
                         document.head.appendChild(style);
@@ -136,14 +142,14 @@ $(() => {
 
             if (!$("#products-map-area").length) {
                 $listing.append(`
-                    <div id="products-map-area" style="width: 100%; margin-top: 15px;">
-                        <div class="card p-0 shadow-sm border-0 mb-4" style="border-radius: 20px; overflow: hidden; position: relative; border: 1px solid #e2e8f0;">
+                    <div id="products-map-area" style="width: 100%; margin-top: 10px;">
+                        <div class="card p-0 shadow-sm border-0 mb-4" style="border-radius: 24px; overflow: hidden; position: relative; border: 1px solid #cbd5e1; background: #ffffff;">
                             <!-- Floating Header Overlay -->
-                            <div style="position: absolute; top: 16px; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); padding: 8px 20px; border-radius: 30px; box-shadow: 0 6px 25px rgba(0,0,0,0.16); display: flex; gap: 12px; align-items: center; border: 1px solid rgba(255,255,255,0.8);">
-                                <span style="font-weight: 700; font-size: 13px; color: #0f172a;">🗺️ Merchant & Product Locations</span>
-                                <a href="/map" class="btn btn-xs btn-outline-dark rounded-pill px-3 py-1" style="font-size: 11px; font-weight: 700;">Fullscreen Map &rarr;</a>
+                            <div style="position: absolute; top: 18px; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(255,255,255,0.96); backdrop-filter: blur(14px); padding: 8px 22px; border-radius: 35px; box-shadow: 0 6px 28px rgba(0,0,0,0.18); display: flex; gap: 14px; align-items: center; border: 1px solid rgba(255,255,255,0.9);">
+                                <span style="font-weight: 800; font-size: 13px; color: #0f172a;">🗺️ Verified Business & Product Map</span>
+                                <a href="/map" class="btn btn-xs btn-outline-dark rounded-pill px-3 py-1 font-weight-bold" style="font-size: 11px;">Fullscreen Map &rarr;</a>
                             </div>
-                            <div id="all-products-leaflet-map" style="height: 82vh; min-height: 580px; width: 100%; z-index: 1;"></div>
+                            <div id="all-products-leaflet-map"></div>
                         </div>
                     </div>
                 `);
@@ -155,15 +161,19 @@ $(() => {
         }
 
         init_map_instance() {
+            let me = this;
             if (!window.L) {
-                let link = document.createElement("link");
-                link.rel = "stylesheet";
-                link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-                document.head.appendChild(link);
+                if (!document.getElementById('leaflet-css-bundle')) {
+                    let link = document.createElement("link");
+                    link.id = 'leaflet-css-bundle';
+                    link.rel = "stylesheet";
+                    link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+                    document.head.appendChild(link);
+                }
 
                 let script = document.createElement("script");
                 script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-                script.onload = () => { this.init_map_instance(); };
+                script.onload = () => { me.init_map_instance(); };
                 document.head.appendChild(script);
                 return;
             }
@@ -172,7 +182,9 @@ $(() => {
             if (!mapElem) return;
 
             if (this.mapInstance) {
-                this.mapInstance.invalidateSize();
+                setTimeout(() => { this.mapInstance.invalidateSize(true); }, 50);
+                setTimeout(() => { this.mapInstance.invalidateSize(true); }, 250);
+                setTimeout(() => { this.mapInstance.invalidateSize(true); }, 600);
                 return;
             }
 
@@ -183,6 +195,13 @@ $(() => {
             }).addTo(map);
 
             this.mapInstance = map;
+
+            // Invalidate size on container show and resize
+            setTimeout(() => { map.invalidateSize(true); }, 100);
+            setTimeout(() => { map.invalidateSize(true); }, 350);
+            setTimeout(() => { map.invalidateSize(true); }, 700);
+
+            window.addEventListener('resize', () => { map.invalidateSize(true); });
 
             fetch('/api/method/bismillah_ethiobiz.company_map_api.get_company_locations')
                 .then(r => r.json())
