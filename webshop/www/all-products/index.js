@@ -18,6 +18,7 @@ $(() => {
 
             this.bind_card_actions();
             this.setup_icon_view_toggler(view_type);
+            this.inject_company_filter_bar();
         }
 
         bind_card_actions() {
@@ -25,6 +26,55 @@ $(() => {
                 if (webshop.webshop.shopping_cart) webshop.webshop.shopping_cart.bind_add_to_cart_action();
                 if (webshop.webshop.wishlist) webshop.webshop.wishlist.bind_wishlist_action();
             }
+        }
+
+        inject_company_filter_bar() {
+            let timer = setInterval(() => {
+                let $filterSection = $(".filters-section");
+                if ($filterSection.length && !$("#ethiobiz-company-filter-widget").length) {
+                    clearInterval(timer);
+
+                    // Fetch active company locations to populate company filter
+                    fetch('/api/method/bismillah_ethiobiz.company_map_api.get_company_locations')
+                        .then(r => r.json())
+                        .then(res => {
+                            const companies = (res.message && res.message.companies) ? res.message.companies : [];
+                            if (!companies.length) return;
+
+                            let companyOpts = '<option value="all">🏢 All Companies / Merchants</option>';
+                            companies.forEach(c => {
+                                companyOpts += `<option value="${c.name}">${c.name}</option>`;
+                            });
+
+                            $filterSection.prepend(`
+                                <div id="ethiobiz-company-filter-widget" class="mb-4 pb-3 border-bottom">
+                                    <label class="font-weight-bold text-dark mb-2" style="font-size: 13px;">🏢 Filter by Company:</label>
+                                    <select id="select-company-filter" class="form-select form-select-sm rounded-pill px-3 shadow-sm border" style="font-size: 12px; font-weight: 600;">
+                                        ${companyOpts}
+                                    </select>
+                                </div>
+                            `);
+
+                            $("#select-company-filter").on("change", function() {
+                                const selected = $(this).val();
+                                if (selected === "all") {
+                                    $(".item-card").show();
+                                } else {
+                                    $(".item-card").each(function() {
+                                        const cardText = $(this).text();
+                                        if (cardText.includes(selected)) {
+                                            $(this).show();
+                                        } else {
+                                            $(this).hide();
+                                        }
+                                    });
+                                }
+                            });
+                        });
+                }
+            }, 100);
+
+            setTimeout(() => clearInterval(timer), 4000);
         }
 
         setup_icon_view_toggler(initial_view) {
@@ -196,7 +246,6 @@ $(() => {
 
             this.mapInstance = map;
 
-            // Invalidate size on container show and resize
             setTimeout(() => { map.invalidateSize(true); }, 100);
             setTimeout(() => { map.invalidateSize(true); }, 350);
             setTimeout(() => { map.invalidateSize(true); }, 700);
