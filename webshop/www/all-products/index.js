@@ -19,6 +19,7 @@ $(() => {
             this.bind_card_actions();
             this.setup_icon_view_toggler(view_type);
             this.inject_company_filter_bar();
+            this.fix_fallback_images();
         }
 
         bind_card_actions() {
@@ -28,13 +29,30 @@ $(() => {
             }
         }
 
+        fix_fallback_images() {
+            setInterval(() => {
+                $(".item-card").each(function() {
+                    let $img = $(this).find(".item-image img, .card-img-top");
+                    if ($img.length) {
+                        let src = $img.attr("src") || "";
+                        if (!src || src.includes("default-avatar") || src.includes("default-image")) {
+                            $img.parent().html(`
+                                <div style="height: 140px; background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); display: flex; align-items: center; justify-content: center; font-size: 40px; border-radius: 12px; margin-bottom: 12px;">
+                                    🛍️
+                                </div>
+                            `);
+                        }
+                    }
+                });
+            }, 500);
+        }
+
         inject_company_filter_bar() {
             let timer = setInterval(() => {
                 let $filterSection = $(".filters-section");
                 if ($filterSection.length && !$("#ethiobiz-company-filter-widget").length) {
                     clearInterval(timer);
 
-                    // Fetch active company locations to populate company filter
                     fetch('/api/method/bismillah_ethiobiz.company_map_api.get_company_locations')
                         .then(r => r.json())
                         .then(res => {
@@ -84,10 +102,8 @@ $(() => {
                 if ($toolbar.length) {
                     clearInterval(timer);
 
-                    // Restyle toolbar for clean right-alignment
                     $toolbar.addClass("d-flex justify-content-between align-items-center mb-4");
 
-                    // Replace or inject right-aligned icon-only toggler
                     $(".toggle-container").remove();
                     $toolbar.append(`
                         <div class="toggle-container d-flex justify-content-end align-items-center ms-auto" style="margin-left: auto;">
