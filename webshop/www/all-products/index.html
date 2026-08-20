@@ -6,6 +6,11 @@
 <div class="mb-6">{{ _("All Products") }}</div>
 {% endblock header %}
 
+{% block script %}
+<script type="text/javascript" src="/assets/webshop/js/product_ui/views.js"></script>
+<script type="text/javascript" src="/all-products/index.js"></script>
+{% endblock %}
+
 {% block page_content %}
 <div class="row">
 	<!-- Items section -->
@@ -47,5 +52,4 @@
 		});
 	});
 </script>
-
 {% endblock %}

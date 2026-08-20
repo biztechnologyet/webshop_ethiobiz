@@ -1,4 +1,4 @@
-// WebShop ProductView with Grid View, List View, and Map View Support
+// WebShop ProductView with Full-Page Embedded Map View Support
 webshop.ProductView = class {
 	/* Options:
 		- View Type
@@ -59,7 +59,7 @@ webshop.ProductView = class {
 					} else {
 						me.re_render_discount_filters(result.message["filters"].discount_filters);
 
-						// Render List, Grid, and Map Views
+						// Render List, Grid, and Full-Page Map Views
 						me.render_list_view(result.message["items"], result.message["settings"]);
 						me.render_grid_view(result.message["items"], result.message["settings"]);
 						me.render_map_view(result.message["items"], result.message["settings"]);
@@ -115,14 +115,14 @@ webshop.ProductView = class {
 		let me = this;
 		if (!$("#products-map-area").length) {
 			this.products_section.append(`
-				<div id="products-map-area" class="products-list mt-3 ${me.preference === 'Map View' ? '' : 'hidden'}">
-					<div class="card p-3 shadow-sm border-0 mb-3" style="border-radius: 14px;">
-						<div class="d-flex justify-content-between align-items-center mb-2">
-							<h5 class="mb-0 font-weight-bold" style="color: #0f172a;">🗺️ Products & Provider Map</h5>
-							<a href="/map" class="btn btn-sm btn-outline-primary rounded-pill">Open Fullscreen Map &rarr;</a>
+				<div id="products-map-area" class="products-list mt-3 ${me.preference === 'Map View' ? '' : 'hidden'}" style="width: 100%;">
+					<div class="card p-0 shadow-sm border-0 mb-3" style="border-radius: 16px; overflow: hidden; position: relative;">
+						<!-- Floating On-Map Bar in Products Page -->
+						<div style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; gap: 8px; align-items: center;">
+							<span style="font-weight: 700; font-size: 13px; color: #0f172a;">🗺️ Store Locations Map</span>
+							<a href="/map" class="btn btn-xs btn-outline-dark rounded-pill px-2 py-1" style="font-size: 11px;">Fullscreen Map &rarr;</a>
 						</div>
-						<p class="text-muted small mb-3">Explore seller locations and browse products available by area across Ethiopia.</p>
-						<div id="shop-embedded-map" style="height: 520px; width: 100%; border-radius: 12px; z-index: 1;"></div>
+						<div id="shop-embedded-map" style="height: 75vh; min-height: 520px; width: 100%; z-index: 1;"></div>
 					</div>
 				</div>
 			`);
@@ -134,20 +134,17 @@ webshop.ProductView = class {
 	}
 
 	init_embedded_map() {
-		if (this.map_initialized || !window.L) {
-			if (!window.L) {
-				// Dynamically load Leaflet if not present
-				let link = document.createElement("link");
-				link.rel = "stylesheet";
-				link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-				document.head.appendChild(link);
+		if (!window.L) {
+			let link = document.createElement("link");
+			link.rel = "stylesheet";
+			link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+			document.head.appendChild(link);
 
-				let script = document.createElement("script");
-				script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-				script.onload = () => { this.init_embedded_map(); };
-				document.head.appendChild(script);
-				return;
-			}
+			let script = document.createElement("script");
+			script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+			script.onload = () => { this.init_embedded_map(); };
+			document.head.appendChild(script);
+			return;
 		}
 
 		const mapElem = document.getElementById('shop-embedded-map');
@@ -175,11 +172,11 @@ webshop.ProductView = class {
 				companies.forEach(c => {
 					const marker = L.marker([c.lat, c.lng]).addTo(map);
 					marker.bindPopup(`
-						<div style="font-family: inherit; min-width: 180px;">
-							<h6 style="margin: 0 0 4px 0; font-weight: 700;">${c.name}</h6>
-							<span style="font-size: 11px; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px;">${c.category}</span>
+						<div style="font-family: inherit; min-width: 190px; padding: 4px;">
+							<h6 style="margin: 0 0 4px 0; font-weight: 700; font-size: 15px;">${c.name}</h6>
+							<span style="font-size: 11px; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: 600;">${c.category}</span>
 							<div style="font-size: 12px; color: #64748b; margin-top: 6px;">📍 ${c.address || 'Addis Ababa'}</div>
-							<a href="${c.shop_url}" style="display: block; margin-top: 8px; background: #008080; color: white; text-align: center; padding: 4px 8px; border-radius: 4px; font-size: 11px; text-decoration: none;">View Store Products</a>
+							<a href="${c.shop_url}" style="display: block; margin-top: 8px; background: #008080; color: white; text-align: center; padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; text-decoration: none;">View Store Products &rarr;</a>
 						</div>
 					`);
 				});
@@ -397,18 +394,29 @@ webshop.ProductView = class {
 
 	restore_discount_filter() {
 		const filters = frappe.utils.get_query_params();
-		let field_filters = filters.field_filters;
-		if (!field_filters) return;
+		let {field_filters, attribute_filters} = filters;
 
-		field_filters = JSON.parse(field_filters);
-
-		if (field_filters && field_filters["discount"]) {
-			const values = field_filters["discount"];
-			const selector = values.map(value => {
-				return `input[data-filter-name="discount"][data-filter-value="${value}"]`;
-			}).join(',');
-			$(selector).prop('checked', true);
+		if (field_filters) {
+			field_filters = JSON.parse(field_filters);
+			for (let fieldname in field_filters) {
+				const values = field_filters[fieldname];
+				const selector = values.map(value => {
+					return `input[data-filter-name="${fieldname}"][data-filter-value="${value}"]`;
+				}).join(',');
+				$(selector).prop('checked', true);
+			}
 			this.field_filters = field_filters;
+		}
+		if (attribute_filters) {
+			attribute_filters = JSON.parse(attribute_filters);
+			for (let attribute in attribute_filters) {
+				const values = attribute_filters[attribute];
+				const selector = values.map(value => {
+					return `input[data-attribute-name="${attribute}"][data-attribute-value="${value}"]`;
+				}).join(',');
+				$(selector).prop('checked', true);
+			}
+			this.attribute_filters = attribute_filters;
 		}
 	}
 
