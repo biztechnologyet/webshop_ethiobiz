@@ -1,0 +1,130 @@
+{
+ "actions": [],
+ "autoname": "format:SPEC-{#####}",
+ "creation": "2026-08-21 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "specialist_name",
+  "specialty_role",
+  "company",
+  "rating",
+  "column_break_meta",
+  "years_experience",
+  "phone",
+  "is_active",
+  "specialist_image",
+  "section_break_bio",
+  "bio"
+ ],
+ "fields": [
+  {
+   "fieldname": "specialist_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Specialist / Stylist Name",
+   "reqd": 1
+  },
+  {
+   "default": "Master Stylist & Barber",
+   "fieldname": "specialty_role",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Role / Specialty",
+   "options": "Master Stylist & Barber\nSenior Hair Colorist\nEsthetician & Facial Specialist\nLicensed Massage Therapist\nNail Artist & Technician\nBridal Makeup Artist"
+  },
+  {
+   "default": "Biz Technology Solutions",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company / Salon Branch",
+   "options": "Company"
+  },
+  {
+   "default": "4.9",
+   "fieldname": "rating",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Rating (out of 5)"
+  },
+  {
+   "fieldname": "column_break_meta",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "5",
+   "fieldname": "years_experience",
+   "fieldtype": "Int",
+   "label": "Years Experience"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone Number"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Available for Booking"
+  },
+  {
+   "fieldname": "specialist_image",
+   "fieldtype": "Attach Image",
+   "label": "Profile Photo"
+  },
+  {
+   "fieldname": "section_break_bio",
+   "fieldtype": "Section Break",
+   "label": "Professional Bio"
+  },
+  {
+   "fieldname": "bio",
+   "fieldtype": "Text",
+   "label": "Bio & Expertise"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Webshop",
+ "name": "Salon Specialist",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Guest"
+  },
+  {
+   "read": 1,
+   "role": "All"
+  },
+  {
+   "read": 1,
+   "role": "Website User"
+  }
+ ],
+ "quick_entry": 1,
+ "search_fields": "specialist_name,specialty_role,company",
+ "sort_field": "rating",
+ "sort_order": "DESC",
+ "title_field": "specialist_name",
+ "track_changes": 1
+}

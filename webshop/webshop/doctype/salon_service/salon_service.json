@@ -1,0 +1,132 @@
+{
+ "actions": [],
+ "autoname": "format:SRV-{#####}",
+ "creation": "2026-08-21 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "service_name",
+  "category",
+  "company",
+  "price",
+  "column_break_meta",
+  "duration_minutes",
+  "is_active",
+  "show_in_shop",
+  "service_image",
+  "section_break_desc",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "service_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Service Name",
+   "reqd": 1
+  },
+  {
+   "default": "Haircut & Styling",
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Category",
+   "options": "Haircut & Styling\nKeratin & Hair Treatments\nFacial & Skin Therapy\nBody Massage & Spa\nManicure & Pedicure\nBridal & Glamour Makeup"
+  },
+  {
+   "default": "Biz Technology Solutions",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company / Provider",
+   "options": "Company"
+  },
+  {
+   "default": "800.0",
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price (ETB)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_meta",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "45",
+   "fieldname": "duration_minutes",
+   "fieldtype": "Int",
+   "label": "Duration (Minutes)"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Active for Booking"
+  },
+  {
+   "default": "1",
+   "fieldname": "show_in_shop",
+   "fieldtype": "Check",
+   "label": "Publish to Magala Shop"
+  },
+  {
+   "fieldname": "service_image",
+   "fieldtype": "Attach Image",
+   "label": "Service Image"
+  },
+  {
+   "fieldname": "section_break_desc",
+   "fieldtype": "Section Break",
+   "label": "Service Description"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "label": "Full Description"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Webshop",
+ "name": "Salon Service",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Guest"
+  },
+  {
+   "read": 1,
+   "role": "All"
+  },
+  {
+   "read": 1,
+   "role": "Website User"
+  }
+ ],
+ "quick_entry": 1,
+ "search_fields": "service_name,category,company",
+ "sort_field": "service_name",
+ "sort_order": "ASC",
+ "title_field": "service_name",
+ "track_changes": 1
+}
